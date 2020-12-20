@@ -30,16 +30,19 @@ class MyMemoryProvider(BaseProvider):
         self.email = kwargs.get('email', '')
         self.languages = '{}|{}'.format(self.from_lang, self.to_lang)
 
-    def _make_request(self, text):
+    def _make_request(self, text, proxy=None, headers=None):
         params = {'q': text, 'langpair': self.languages}
         if self.email:
             params['de'] = self.email
 
-        response = requests.get(self.base_url, params=params, headers=self.headers)
+        if headers is None:
+            headers = self.headers
+
+        response = requests.get(self.base_url, params=params, headers=headers, proxy=proxy)
         return response.json()
 
-    def get_translation(self, text):
-        data = self._make_request(text)
+    def get_translation(self, text, proxy=None, headers=None):
+        data = self._make_request(text, proxy, headers)
 
         translation = data['responseData']['translatedText']
         if translation:
