@@ -34,9 +34,9 @@ class Translator:
             **kwargs
         )
 
-    def translate(self, text):
+    def translate(self, text, *args, **kwargs):
         if self.from_lang == self.to_lang:
             return text
 
         text_list = wrap(text, TRANSLATION_API_MAX_LENGHT, replace_whitespace=False)
-        return ' '.join(self.provider.get_translation(text_wraped) for text_wraped in text_list)
+        return ' '.join(self.provider.get_translation(text_wraped, *args, **kwargs) for text_wraped in text_list)
