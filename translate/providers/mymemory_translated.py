@@ -38,7 +38,7 @@ class MyMemoryProvider(BaseProvider):
         if headers is None:
             headers = self.headers
 
-        response = requests.get(self.base_url, params=params, headers=headers, proxy=proxy)
+        response = requests.get(self.base_url, params=params, headers=headers, proxies=proxy)
         return response.json()
 
     def get_translation(self, text, proxy=None, headers=None):
